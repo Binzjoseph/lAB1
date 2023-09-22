@@ -8,6 +8,12 @@ editor: visual
 self-contained: true
 ---
 
+```{r}
+library(Lahman)
+dim(Teams)
+?Teams
+```
+
 ## Setup
 
 Load packages and data:
@@ -25,7 +31,7 @@ library(Lahman)
 dplyr::glimpse(Teams)
 ```
 
-The `Teams` dataset has \_\_\_ observations and \_\_\_ variables.
+The `Teams` dataset has 3015 observations and 48 variables.
 
 ### Exercise 2
 
