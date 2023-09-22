@@ -35,31 +35,80 @@ The `Teams` dataset has 3015 observations and 48 variables.
 
 ### Exercise 2
 
-...
+```{r filter_&_select}
+mets <- Teams  |> 
+  dplyr::filter(teamID == "NYN")
+my_mets <- mets |> 
+  dplyr::filter(yearID %in% 2004:2012)|>
+  dplyr::select(yearID,G,W,L)
+my_mets
+```
 
 ### Exercise 3
 
-...
+```{r}
+mets_ben <- Teams |>
+  dplyr::select(teamID, yearID, G, RA, W, L, RS = R) |>
+  dplyr::filter(teamID == "NYN" & yearID %in% 2004:2012)
+mets_ben
+```
 
 ### Exercise 4
 
-...
+```{r}
+mets_ben <- mets_ben |>
+  dplyr::mutate(WPct = 1 / (1 + (RA / RS) * 2))
+mets_ben
+
+mets_ben <- mets_ben |>
+  dplyr::mutate(W_hat = WPct*G)
+mets_ben
+```
 
 ### Exercise 5
 
-...
+```{r}
+mets_ben<-mets_ben |>
+  dplyr::mutate(performance=ifelse(W>W_hat,'Good','Bad'))
+mets_ben
+
+stat<- mets_ben |>
+  dplyr::group_by(performance) |>
+  dplyr::tally()
+  
+
+stat
+
+```
 
 ### Exercise 6
 
-...
+```{r}
+dplyr::arrange(mets_ben,desc(WPct))
+```
 
 ### Exercise 7
 
-...
+```{r}
+mets_ben<-mets_ben |>
+  dplyr::mutate(Diff = W-W_hat) |>
+  dplyr::arrange(desc(Diff))
+
+```
 
 ### Exercise 8
 
-...
+```{r}
+mets_ben |>
+  dplyr::summarize(
+    num_years = , 
+    total_W = sum(W), 
+    total_L = sum(L), 
+    total_WPct = mean(WPct), 
+    sum_resid = sum(Diff)
+  )
+
+```
 
 ### Exercise 9
 
